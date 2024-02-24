@@ -1,0 +1,35 @@
+import random
+import socket
+import struct
+
+def generate_random_ip_packets(n, l, output_format):
+    packets = []
+    for _ in range(n):
+        # Generate a random packet of given length
+        packet = b""
+        for _ in range(l):
+            # Generate a random byte and append to the packet
+            packet += struct.pack('!B', random.randint(0, 255))
+        packets.append(packet)
+
+    # Print the generated packets based on the output format
+    for i, packet in enumerate(packets):
+        if output_format == 'hex':
+            print(f"Packet {i+1} (in hexadecimal): {packet.hex()}")
+        elif output_format == 'binary':
+            binary_packet = ' '.join(format(byte, '08b') for byte in packet)
+            print(f"Packet {i+1} (in binary): {binary_packet}")
+        else:
+            print("Invalid output format. Please choose 'hex' or 'binary'.")
+
+def main():
+    # Get user input for the number of packets, packet length, and output format
+    num_packets = int(input("Enter the number of packets: "))
+    packet_length = int(input("Enter the length of packets: "))
+    #output_format = input("Enter the output format (hex/binary): ").lower()
+    
+    # Generate and print random IP packets
+    generate_random_ip_packets(num_packets, packet_length, "hex")
+
+if __name__ == "__main__":
+    main()
