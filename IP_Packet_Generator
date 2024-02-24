@@ -1,6 +1,7 @@
 import random
 import socket
 import struct
+# I have put the option of choosing between hex and bin for the output.
 
 def generate_random_ip_packets(n, l, output_format):
     packets = []
@@ -26,10 +27,10 @@ def main():
     # Get user input for the number of packets, packet length, and output format
     num_packets = int(input("Enter the number of packets: "))
     packet_length = int(input("Enter the length of packets: "))
-    #output_format = input("Enter the output format (hex/binary): ").lower()
+    output_format = input("Enter the output format (hex/binary): ").lower()
     
     # Generate and print random IP packets
-    generate_random_ip_packets(num_packets, packet_length, "hex")
+    generate_random_ip_packets(num_packets, packet_length, output_format)
 
 if __name__ == "__main__":
     main()
