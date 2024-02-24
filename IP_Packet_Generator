@@ -27,6 +27,7 @@ def main():
     # Get user input for the number of packets, packet length, and output format
     num_packets = int(input("Enter the number of packets: "))
     packet_length = int(input("Enter the length of packets: "))
+    #hex/bin selector
     output_format = input("Enter the output format (hex/binary): ").lower()
     
     # Generate and print random IP packets
