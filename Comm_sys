@@ -1,0 +1,86 @@
+import random
+import socket
+import struct
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.special import erfc
+
+# Transmitter
+def generate_packets(n, l):
+    packets = []
+    for _ in range(n):
+        packet = b"" 
+        for _ in range(l):
+            packet += struct.pack('!B', random.randint(0, 255))
+        packets.append(packet)
+    return packets
+
+# Channel  
+def add_noise(packets, noise_prob):
+    noisy_packets = []
+    for packet in packets:
+        noisy_packet = b""
+        for byte in packet:
+            if random.random() < noise_prob: 
+                noisy_byte = struct.pack('!B', byte ^ 255)  
+            else:
+                noisy_byte = struct.pack('!B', byte)
+            noisy_packet += noisy_byte
+        noisy_packets.append(noisy_packet)
+    return noisy_packets
+
+# Receiver
+def receive(noisy_packets):
+    received_packets = []
+    for packet in noisy_packets:
+        received_packets.append(packet)
+    return received_packets
+
+# Main
+num_packets = 100000
+packet_length = 22
+noise_prob = 0.1
+
+packets = generate_packets(num_packets, packet_length)
+
+print("Original Packets:")
+for packet in packets:
+     print(packet.hex())
+
+noisy_packets = add_noise(packets, noise_prob)
+received_packets = receive(noisy_packets)  
+
+print("\nReceived Packets:")
+for packet in received_packets:
+     print(packet.hex())
+    
+#-----------------------------------------------------------------------
+
+# LDPC encoder
+def encode_ldpc(data):
+    encoded = [] # Apply LDPC encoding
+    return encoded  
+
+# LDPC decoder
+def decode_ldpc(data):
+    decoded = [] # Apply LDPC decoding
+    return decoded
+
+# Plot BER vs Eb/No
+ebno_range = range(0,10)
+ber_uncoded = []
+ber_coded = []
+for ebno in ebno_range:
+    # Uncoded BER
+    ber_uncoded.append(0.5*erfc(np.sqrt(10**(ebno/10))))
+    
+    # Coded BER (example)
+    ber_coded.append(0.5*erfc(np.sqrt(2*10**(ebno/10)))) 
+
+plt.semilogy(ebno_range, ber_uncoded, label='Uncoded')
+plt.semilogy(ebno_range, ber_coded, label='LDPC Coded')
+plt.xlabel('Eb/No (dB)')
+plt.ylabel('BER')
+plt.legend()
+plt.grid()
+plt.show()
