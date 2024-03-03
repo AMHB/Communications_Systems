@@ -54,7 +54,7 @@ print("\nReceived Packets:")
 for packet in received_packets:
      print(packet.hex())
     
-#-----------------------------------------------------------------------
+#------------------------------------------------------------------------
 
 # LDPC encoder
 def encode_ldpc(data):
